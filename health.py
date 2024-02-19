@@ -11,12 +11,6 @@ authorization = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 ## Function to load Google Gemini Pro Vision API And get response
-
-def get_gemini_repsonse(input,image,prompt):
-    model=genai.GenerativeModel('gemini-pro-vision')
-    response=model.generate_content([image[0],input,prompt])
-    return response.text
-
 def input_image_setup(uploaded_file):
     # Check if a file has been uploaded
     if uploaded_file is not None:
@@ -32,6 +26,13 @@ def input_image_setup(uploaded_file):
         return image_parts
     else:
         raise FileNotFoundError("No file uploaded")
+
+def get_gemini_repsonse(image,input,prompt):
+    model=genai.GenerativeModel('gemini-pro-vision')
+    response=model.generate_content([image[0],input,prompt])
+    return response.text
+
+
     
 ##initialize our streamlit app
 
