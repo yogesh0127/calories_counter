@@ -38,15 +38,16 @@ def input_image_setup(uploaded_file):
 st.set_page_config(page_title="Calories Counter ")
 
 st.header("calories counter")
-input=st.text_input("Input Prompt: ",key="input")
+
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+input=st.text_input("Addition Query related to food: ",key="input")
 image=""   
 if uploaded_file is not None:
     image = Image.open(uploaded_file)
     st.image(image, caption="Uploaded Image.", use_column_width=True)
 
 
-submit=st.button("Tell me the total calories")
+submit=st.button("Results")
 
 input_prompt="""
 You are an expert in nutritionist where you need to see the food items from the image
@@ -57,6 +58,7 @@ You are an expert in nutritionist where you need to see the food items from the 
                2. Item 2 - no of calories
                ----
                ----
+               and address the query in input
 
 
 """
@@ -65,6 +67,6 @@ You are an expert in nutritionist where you need to see the food items from the 
 
 if submit:
     image_data=input_image_setup(uploaded_file)
-    response=get_gemini_repsonse(input_prompt,image_data,input)
+    response=get_gemini_repsonse(image_data,input_prompt,input)
     st.subheader("The Response is")
     st.write(response)
